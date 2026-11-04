@@ -12,7 +12,7 @@ from typing import Any
 from ulai.agent.v1 import agent_pb2 as pb
 
 from ._errors import ValidationError
-from ._models import ClassifierBackend, Language, Opening, Voice, check_listed, wire
+from ._models import ClassifierBackend, Language, Opening, Transport, Voice, check_listed, wire
 from ._pipeline import PIPELINES, Pipeline, UlaiLive, check_duration, check_range
 from ._tools import Tool
 
@@ -81,9 +81,15 @@ class Room:
     """The control plane that holds the room. Required."""
     token: str = field(default="", repr=False)
     """Authenticates to that control plane."""
+    transport: Transport | str | None = None
+    """How the agent server carries the room's audio to the media server:
+    Transport.WEBSOCKET or Transport.WEBRTC. None is WEBSOCKET."""
 
     def __repr__(self) -> str:
-        return f"Room(id={self.id!r}, url={self.url!r}, token={_redacted(self.token)})"
+        return (
+            f"Room(id={self.id!r}, url={self.url!r}, token={_redacted(self.token)}, "
+            f"transport={wire(self.transport) or None!r})"
+        )
 
     __str__ = __repr__
 
@@ -272,6 +278,15 @@ class Agent:
         if self.pipeline is not None:
             self.pipeline._apply(p)
         return p
+
+
+def transport_pb(transport: Any) -> int:
+    v = wire(transport)
+    if v == Transport.WEBSOCKET.value:
+        return pb.MEDIA_TRANSPORT_WEBSOCKET
+    if v == Transport.WEBRTC.value:
+        return pb.MEDIA_TRANSPORT_WEBRTC
+    return pb.MEDIA_TRANSPORT_UNSPECIFIED
 
 
 def opening_pb(opening: Any) -> int:

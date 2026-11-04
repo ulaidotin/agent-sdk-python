@@ -84,7 +84,8 @@ async def main() -> None:
     address = os.environ.get("ULAI_ADDR") or "127.0.0.1:50052"
     async with agent.Client(address, api_key=os.environ.get("ULAI_API_KEY")) as client:
         if args.mode == "join":
-            room = agent.Room(id=args.room, url=args.room_url, token=args.room_token)
+            room = agent.Room(id=args.room, url=args.room_url, token=args.room_token,
+                              transport=agent.Transport.WEBSOCKET)  # or agent.Transport.WEBRTC
             await client.run(room, support, handle)
         else:
             log.info("waiting for calls to %s", support.id)

@@ -100,7 +100,6 @@ from ._events import (
     UsageIO,
 )
 from ._models import (
-    VAD,
     AgentState,
     CascadeMode,
     ClassifierBackend,
@@ -113,8 +112,10 @@ from ._models import (
     Role,
     Speaker,
     STTModel,
+    Transport,
     TurnDetection,
     UlaiLiveVoice,
+    VAD,
     Voice,
 )
 from ._pipeline import Cascade, Pipeline, Realtime, UlaiLive
@@ -173,6 +174,7 @@ __all__ = [
     "Language",
     "LLMModel",
     "Opening",
+    "Transport",
     "ParamType",
     "PipelineKind",
     "RealtimeModel",

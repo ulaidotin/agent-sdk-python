@@ -16,7 +16,8 @@ import grpc
 from ulai.agent.v1 import agent_pb2 as pb
 from ulai.agent.v1 import agent_pb2_grpc as rpc
 
-from ._agent import Agent, Room, opening_pb, tool_problems
+from ._agent import Agent, Room, opening_pb, tool_problems, transport_pb
+from ._models import Transport, check_listed
 from ._errors import (
     AgentError,
     CallEndedError,
@@ -200,6 +201,9 @@ class Client:
                 problems.append("join needs Room.id: the server never creates rooms")
             if not room.url:
                 problems.append("join needs Room.url, the control plane holding the room")
+            # Not a list check: these are the only two the server can dial.
+            check_listed(problems, "Room.transport", room.transport, Transport, True,
+                         "use agent.Transport.WEBSOCKET or agent.Transport.WEBRTC")
         custom = ""
         if fields:
             if not isinstance(fields, Mapping):
@@ -222,6 +226,7 @@ class Client:
             room_url=room.url,
             room_token=room.token,
             profile=agent._profile(),
+            transport=transport_pb(room.transport),
         )
         try:
             resp = await self._rooms.Join(request, metadata=self._metadata)

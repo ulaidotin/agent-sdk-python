@@ -4,14 +4,14 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ulai-agents"
-version = "0.1.0"
+version = "0.2.0"
 description = "Build voice agents on the Ulai agent server."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 dependencies = [
-  "ulai-agent-protocol>=0.1.0,<0.2",
+  "ulai-agent-protocol>=0.2.0,<0.3",
   "grpcio>=1.85.1",
   "protobuf>=7.35.1,<8",
 ]
