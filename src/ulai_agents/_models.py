@@ -147,10 +147,14 @@ class Language(_Value):
 
 
 class ClassifierBackend(_Value):
-    """What judges who answered a dialled call: a person, a voicemail, a ringtone."""
+    """What judged who answered a dialled call: a person, a voicemail, a ringtone.
+
+    .. deprecated:: 0.2.1
+       Ulai no longer detects voicemail, so ``Options.classifier`` has no
+       effect on the call."""
 
     GEMINI_LIVE = "gemini-live"
-    """The server's default."""
+    """The server's former default."""
 
 
 class Opening(_Value):

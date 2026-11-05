@@ -238,7 +238,7 @@ class Ended(Event):
     """How much agent audio the caller heard."""
     end_reason: str = ""
     """Why, in the server's words: ended, terminated, max_duration,
-    no_response, voicemail, CALL_FAILED."""
+    no_response, CALL_FAILED."""
     pipeline: PipelineMetrics | None = None
     """The call's latency figures, when the server kept them."""
     elapsed: timedelta = _ZERO

@@ -115,7 +115,11 @@ class Options:
     """Let the model hang up by itself with the server's end_call tool.
     Default: on. Declaring your own end_call tool replaces the server's."""
     voicemail_detection: bool | None = None
-    """End outbound calls that reach a voicemail greeting."""
+    """Asked for outbound calls that reach a voicemail greeting to be ended.
+
+    .. deprecated:: 0.2.1
+       Ulai no longer detects voicemail, so this has no effect on the call.
+       It is still accepted and sent, so code that sets it keeps working."""
     replay_lost_utterances: bool | None = None
     """Re-send what the caller said while the model was reconnecting."""
     background_noise: bool = False
@@ -127,7 +131,10 @@ class Options:
     minimal_audio_processing: bool | None = None
     """Turn off all caller-audio processing except the denoiser. A diagnostic."""
     classifier: ClassifierBackend | str | None = None
-    """What judges who answered a dialled call."""
+    """What judged who answered a dialled call.
+
+    .. deprecated:: 0.2.1
+       Ulai no longer detects voicemail, so this has no effect on the call."""
     workspace_id: str = ""
     """The account the call belongs to, passed through to the server untouched."""
 
