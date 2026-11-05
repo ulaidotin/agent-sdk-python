@@ -123,7 +123,7 @@ from ._session import Session
 from ._tools import Param, Tool, ToolError, tool, tool_from_schema
 from ._types import BackendInfo, CallInfo
 
-__version__ = "0.1.0"
+__version__ = "0.2.1"
 
 __all__ = [
     # The agent
